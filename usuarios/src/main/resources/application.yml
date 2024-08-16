@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: usuarios
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/usuariosdb
+    username: postgres
+    password: senh@BD
+    driver-class-name: org.postgresql.Driver # Adicione o driver do PostgreSQL
+    hikari:
+      maximum-pool-size: 10 # Configuração do pool de conexões HikariCP (opcional)
+
+  jpa:
+    hibernate:
+      ddl-auto: none # Não gerencia o esquema do banco de dados automaticamente
+    show-sql: true # Mostra as consultas SQL no console
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL no console
+    open-in-view: false # Desativa a manutenção do EntityManager aberto durante a visualização
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
