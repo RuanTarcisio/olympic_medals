@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: medalhas-ms
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/usersdb
+    username: postgres
+    password: senh@BD
+    driver-class-name: org.postgresql.Driver # Adicione o driver do PostgreSQL
+    hikari:
+      maximum-pool-size: 10 # Configura??o do pool de conex?es HikariCP (opcional)
+
+  jpa:
+    hibernate:
+      ddl-auto: update # N?o gerencia o esquema do banco de dados automaticamente
+    show-sql: true # Mostra as consultas SQL no console
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL no console
+    open-in-view: false # Desativa a manuten??o do EntityManager aberto durante a visualiza??o
+
+  flyway:
+    locations: classpath:migration
+    baselineOnMigrate: true
+    placeholderReplacement: true
+    baselineVersion: 1
+    encoding: UTF-8
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value} }
