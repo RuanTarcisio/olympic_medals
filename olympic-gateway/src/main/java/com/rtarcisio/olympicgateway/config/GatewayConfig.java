@@ -1,4 +1,4 @@
-package com.rtarcisio.olympicgateway;
+package com.rtarcisio.olympicgateway.config;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -12,8 +12,8 @@ public class GatewayConfig {
     public RouteLocator routes (RouteLocatorBuilder builder) {
         return builder
                 .routes()
-                .route(r -> r.path("/cambio-service/**")
-                        .uri("lb://cambio-service"))
+                .route(r -> r.path("/usuario/**")
+                        .uri("lb://usuarios-ms"))
                 .route(r -> r.path("/book-service/**")
                         .uri("lb://book-service"))
                 .build();

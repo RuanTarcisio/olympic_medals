@@ -25,6 +25,8 @@ public class TokenService {
                     .withSubject(user.getEmail())
                     .withExpiresAt(genExpirationDate())
                     .withClaim("roles", user.getAuthorities().stream().toList())
+                    .withClaim("nome",user.getNome())
+                    .withClaim("id", user.getId())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {

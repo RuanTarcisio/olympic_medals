@@ -7,29 +7,33 @@ import com.rtarcisio.usuarios.dtos.LoginResponseDTO;
 import com.rtarcisio.usuarios.dtos.RegisterDTO;
 import com.rtarcisio.usuarios.repository.UsuarioRepository;
 import com.rtarcisio.usuarios.security.TokenService;
+import com.rtarcisio.usuarios.service.UsuarioService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuario")
+@RequiredArgsConstructor
 public class UsuarioController {
+
+    private final UsuarioService service;
 
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private UsuarioRepository repository;
-    @Autowired
     private TokenService tokenService;
 
-    @PostMapping("/login")
+    @PostMapping("/auth")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -39,15 +43,28 @@ public class UsuarioController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    @PostMapping("/register")
+    @GetMapping("/status")
+    public String statusApi(){
+        return "OK";
+    }
+
+    @PostMapping("/cadastrar")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if(this.repository.findByEmail(data.login()) != null) return ResponseEntity.badRequest().build();
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        Usuario newUser = new Usuario(data.login(), encryptedPassword, data.role());
+        Usuario newUser = service.salvarUser(data);
 
-        this.repository.save(newUser);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
+    }
 
-        return ResponseEntity.ok().build();
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        service.deletarUsuario(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

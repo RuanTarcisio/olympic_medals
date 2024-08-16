@@ -1,5 +1,6 @@
 package com.rtarcisio.usuarios.domain;
 
+import com.rtarcisio.usuarios.domain.enums.StatusUsuarioEnum;
 import com.rtarcisio.usuarios.domain.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,21 +31,33 @@ public class Usuario implements UserDetails {
 
     private String  password;
 
+    private String cpf;
+
+    private LocalDate dataNascimento;
+
+    @Enumerated(EnumType.STRING)
+    private StatusUsuarioEnum statusUsuario;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
     //private List<Paises> paisesSeguidos;
 
+
+    public Usuario(String nome, String email, String password, String cpf, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.email = email;
+        this.password = password;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.role = UserRole.USER;
+        this.statusUsuario = StatusUsuarioEnum.ATIVO;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    public Usuario(String email, String password, UserRole role){
-        this.email = email;
-        this.password = password;
-        this.role = role;
     }
 
     @Override
