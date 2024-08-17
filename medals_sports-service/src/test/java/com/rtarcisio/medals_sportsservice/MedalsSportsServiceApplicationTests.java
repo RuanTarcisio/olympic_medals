@@ -1,10 +1,10 @@
-package com.rtarcisio.medalhasservice;
+package com.rtarcisio.medals_sportsservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MedalhasServiceApplicationTests {
+class MedalsSportsServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

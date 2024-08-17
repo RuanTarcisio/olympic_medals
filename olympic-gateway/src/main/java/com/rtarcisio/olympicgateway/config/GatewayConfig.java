@@ -14,8 +14,11 @@ public class GatewayConfig {
                 .routes()
                 .route(r -> r.path("/usuario/**")
                         .uri("lb://usuarios-ms"))
-                .route(r -> r.path("/book-service/**")
-                        .uri("lb://book-service"))
+                .route(r -> r.path("/auth/**")
+                        .uri("lb://usuarios-ms"))
+                .route(r -> r.path("/sport/**")
+                        .uri("lb://medals_sports-ms"))
+
                 .build();
     }
 }

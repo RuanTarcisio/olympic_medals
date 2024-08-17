@@ -1,5 +1,6 @@
 package com.rtarcisio.usuarios.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rtarcisio.usuarios.domain.enums.StatusUsuarioEnum;
 import com.rtarcisio.usuarios.domain.enums.UserRole;
 import jakarta.persistence.*;
@@ -25,11 +26,11 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String  nome;
+    private String nome;
 
-    private String  email;
+    private String email;
 
-    private String  password;
+    private String password;
 
     private String cpf;
 
@@ -56,7 +57,8 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
@@ -84,9 +86,6 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
-
-
-
 
 
 }

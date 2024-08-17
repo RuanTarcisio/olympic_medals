@@ -1,9 +1,9 @@
 spring:
   application:
-    name: medalhas-ms
+    name: medals_sports-ms
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/usersdb
+    url: jdbc:postgresql://localhost:5432/sports_medals_db
     username: postgres
     password: senh@BD
     driver-class-name: org.postgresql.Driver # Adicione o driver do PostgreSQL
@@ -20,7 +20,7 @@ spring:
     open-in-view: false # Desativa a manuten??o do EntityManager aberto durante a visualiza??o
 
   flyway:
-    locations: classpath:migration
+    locations: classpath:db/migration
     baselineOnMigrate: true
     placeholderReplacement: true
     baselineVersion: 1

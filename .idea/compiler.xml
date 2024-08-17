@@ -9,18 +9,20 @@
         <outputRelativeToContentRoot value="true" />
         <module name="usuarios-service" />
         <module name="olympic-gateway" />
-        <module name="medalhas-service" />
         <module name="olimpiada-service-registry" />
+        <module name="medals_sports-service" />
         <module name="paises-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="medals-sports-service" target="17" />
       <module name="users-service" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="medalhas-service" options="-parameters" />
+      <module name="medals-sports-service" options="-parameters" />
+      <module name="medals_sports-service" options="-parameters" />
       <module name="olimpiada-service-registry" options="-parameters" />
       <module name="olympic-gateway" options="-parameters" />
       <module name="paises-service" options="-parameters" />

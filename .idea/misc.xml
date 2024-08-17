@@ -12,7 +12,14 @@
         <option value="$PROJECT_DIR$/usuarios-service/pom.xml" />
         <option value="$PROJECT_DIR$/users-service/pom.xml" />
         <option value="$PROJECT_DIR$/olympic-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/medals_sports-service/pom.xml" />
+        <option value="$PROJECT_DIR$/medals-sports-service/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/medals-sports-service/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="17" project-jdk-type="JavaSDK">
