@@ -1,6 +1,6 @@
 spring:
   application:
-    name: medals_sports-ms
+    name: medals-sports-ms
 
   datasource:
     url: jdbc:postgresql://localhost:5432/sports_medals_db

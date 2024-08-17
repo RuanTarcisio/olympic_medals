@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,9 +20,14 @@ public class SportController {
 
     private final SportService sportService;
 
-    @GetMapping
-    public Page<Sport> getMedals(
-            @PageableDefault(size = 10, page = 0, sort = "type", direction = Sort.Direction.ASC) Pageable pageable) {
-        return sportService.getAllSports    (pageable);
+    @GetMapping("/status")
+    private String status(){
+        return "ok";
+    }
+
+    @GetMapping("/all")
+    public Page<Sport> getMedals( @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
+        return sportService.getAllSports(page, size);
     }
 }

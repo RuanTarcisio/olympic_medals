@@ -4,12 +4,12 @@ server:
 spring:
     application:
         name: olympic-gateway
-#    cloud:
-#        gateway:
-#            discovery:
-#                locator:
-#                    enabled: true
-#                    lower-case-service-id: true
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
 
 eureka:
     client:
