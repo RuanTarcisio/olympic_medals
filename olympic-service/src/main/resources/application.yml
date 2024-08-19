@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: olympic-ms
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/olympic_db
+    username: postgres
+    password: senh@BD
+    driver-class-name: org.postgresql.Driver # Adicione o driver do PostgreSQL
+    hikari:
+      maximum-pool-size: 10 # Configura??o do pool de conex?es HikariCP (opcional)
+
+  jpa:
+    hibernate:
+      ddl-auto: none # N?o gerencia o esquema do banco de dados automaticamente
+    show-sql: true # Mostra as consultas SQL no console
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL no console
+    open-in-view: false # Desativa a manuten??o do EntityManager aberto durante a visualiza??o
+
+  flyway:
+    locations: classpath:db/migration
+    baselineOnMigrate: true
+    placeholderReplacement: true
+    baselineVersion: 1
+    encoding: UTF-8
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value} }
+
+api:
+  security:
+    token:
+      secret: 98b3a9198243172be6a1ecb688567f9905c93250f489c1fa0a4bab507956ebea

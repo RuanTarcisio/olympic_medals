@@ -14,11 +14,15 @@
         <option value="$PROJECT_DIR$/olympic-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/medals_sports-service/pom.xml" />
         <option value="$PROJECT_DIR$/medals-sports-service/pom.xml" />
+        <option value="$PROJECT_DIR$/olympic-services-registry/pom.xml" />
+        <option value="$PROJECT_DIR$/users-notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/olympic-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/medals-sports-service/pom.xml" />
+        <option value="$PROJECT_DIR$/paises-service/pom.xml" />
       </set>
     </option>
   </component>

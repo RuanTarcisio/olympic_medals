@@ -2,11 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/medals-sports-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/medals_sports-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/olimpiada-service-registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/olympic-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/olympic-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/olympic-services-registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/paises-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/users-notification-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/users-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/usuarios-service/src/main/java" charset="UTF-8" />
   </component>
 </project>
