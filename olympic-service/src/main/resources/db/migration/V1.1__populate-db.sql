@@ -33,7 +33,20 @@ VALUES
     (29, 'Vela com corridas em diferentes classes de barco.', 'Vela', 1),
     (30, 'Pentatlo Moderno incluindo esgrima, natação, equitação, corrida e tiro.', 'Pentatlo Moderno', 1),
     (31, 'Breaking (ou breakdancing) com competições individuais e em grupo.', 'Breaking', 1),
-    (32, 'Patinação artística com apresentações.', 'Patinação Artística', 1);
+    (32, 'Patinação artística com apresentações.', 'Patinação Artística', 1),
+    (33, 'Arremesso de peso, lançamento de dardo e lançamento de disco.', 'Atletismo - Campo', 1),
+    (34, 'Competições de natação em águas abertas.', 'Natação em Águas Abertas', 1),
+    (35, 'Competições de esgrima de combate.', 'Esgrima de Combate', 1),
+    (36, 'Competições de tiro ao alvo.', 'Tiro ao Alvo', 1),
+    (37, 'Competições de ciclismo em pista coberta.', 'Ciclismo em Pista', 1),
+    (38, 'Competições de atletismo em pista coberta.', 'Atletismo em Pista Coberta', 1),
+    (39, 'Competições de escalada em rocha.', 'Escalada em Rocha', 1),
+    (40, 'Competições de patinação no gelo.', 'Patinação no Gelo', 1),
+    (41, 'Competições de curling.', 'Curling', 1),
+    (42, 'Competições de hockey no gelo.', 'Hockey no Gelo', 1),
+    (43, 'Competições de esqui alpino.', 'Esqui Alpino', 1),
+    (44, 'Competições de esqui cross-country.', 'Esqui Cross-Country', 1),
+    (45, 'Competições de snowboard.', 'Snowboard', 1);
 
 INSERT INTO public.country (id, code, "name")
 VALUES
@@ -88,4 +101,4 @@ VALUES
     (49, 'GEO', 'Georgia'),
     (50, 'SLO', 'Slovenia');
 
-COMMIT ;
+COMMIT;

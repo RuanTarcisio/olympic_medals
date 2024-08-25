@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PWEB.iml" filepath="$PROJECT_DIR$/.idea/PWEB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/olympic-service/olympic-service.iml" filepath="$PROJECT_DIR$/olympic-service/olympic-service.iml" />
     </modules>
   </component>
 </project>

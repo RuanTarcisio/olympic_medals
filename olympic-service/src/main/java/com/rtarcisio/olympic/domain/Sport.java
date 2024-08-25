@@ -1,5 +1,6 @@
 package com.rtarcisio.olympic.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,15 @@ public class Sport {
 
     private Integer qtdParticipants;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sport")
-    private List<Medal> medals;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "sport")
+    private MedalGold medalGold;
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "sport")
+    private MedalSilver medalSilver;
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "sport")
+    private MedalBronze medalBronze;
 }

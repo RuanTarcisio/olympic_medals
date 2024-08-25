@@ -2,12 +2,16 @@ package com.rtarcisio.olympic.controllers;
 
 import com.rtarcisio.olympic.domain.Country;
 import com.rtarcisio.olympic.domain.Sport;
+import com.rtarcisio.olympic.dtos.CountryMedalDto;
 import com.rtarcisio.olympic.services.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /*
 DEVELOPED BY RUAN TARCISIO
  */
@@ -39,5 +43,16 @@ public class CountryController {
     public ResponseEntity<Country> getSportByCode(@RequestParam String sportCode) {
         return ResponseEntity.ok(countryService.getCountryByCode(sportCode));
     }
+
+    @GetMapping(value = "/all-country-medals")
+    public ResponseEntity<List<CountryMedalDto>> getAllCountryMedals() {
+
+        List<CountryMedalDto> countrysMedalsDtos = countryService.getAllCountrysMedals();
+
+        return ResponseEntity.ok(countrysMedalsDtos);
+
+    }
+
+
 
 }

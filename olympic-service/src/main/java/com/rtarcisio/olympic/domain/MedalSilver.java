@@ -1,6 +1,5 @@
 package com.rtarcisio.olympic.domain;
 
-import com.rtarcisio.olympic.domain.enums.MedalType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +11,11 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Medal {
+public class MedalSilver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private MedalType type;
 
     private LocalDate awardDate;
 
@@ -27,7 +23,7 @@ public class Medal {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "sport_id")
     private Sport sport;
 }
