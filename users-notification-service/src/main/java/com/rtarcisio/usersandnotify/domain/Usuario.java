@@ -42,11 +42,20 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @ElementCollection
-    @CollectionTable(name = "usuario_country", joinColumns = @JoinColumn(name = "usuario_id"))
-    @Column(name = "country_id")
-    private List<Long> followedCountryIds = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuario_country",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_id")
+    )
+    private List<Country> followedCountries= new ArrayList<Country>();
+
+
+//    @ElementCollection
+//    @CollectionTable(name = "usuario_country", joinColumns = @JoinColumn(name = "usuario_id"))
+//    @Column(name = "country_id")
+//    private List<Long> followedCountryIds = new ArrayList<>();
 
     public Usuario(String nome, String email, String password, String cpf, LocalDate dataNascimento) {
         this.nome = nome;

@@ -25,10 +25,10 @@ public class CountryController {
     private final CountryService countryService;
 
     @GetMapping("/all")
-    public ResponseEntity<Page<Country>> getAllCountrys(Pageable pageable) {
+    public ResponseEntity<List<CountryDto>> getAllCountrys() {
 
-        Page<Country> sportsPage = countryService.getAllCountrys(pageable);
-        return ResponseEntity.ok(sportsPage);
+        List<CountryDto> allCountrys = countryService.getAllCountrys();
+        return ResponseEntity.ok(allCountrys);
     }
     @GetMapping(value = "/{id}")
     public ResponseEntity<CountryMedalDto> getCountry(@PathVariable Long id) {
@@ -44,7 +44,7 @@ public class CountryController {
         return ResponseEntity.ok(countryMedalDto);
     }
 
-    @GetMapping(value = "/all-country-medals")
+    @GetMapping(value = "/all-medals")
     public ResponseEntity<List<CountryMedalDto>> getAllCountryMedals() {
 
         List<CountryMedalDto> countrysMedalsDtos = countryService.getAllCountrysMedals();

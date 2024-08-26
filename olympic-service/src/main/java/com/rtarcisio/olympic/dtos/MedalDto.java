@@ -22,8 +22,14 @@ public class MedalDto {
     private LocalDate awardDate;
 
     @NotBlank
-    private String country_code;
+    private String countryCode;
+
+    @NotBlank
+    private String countryName;
 
     @NotBlank
     private Long sportId;
+
+    @NotBlank
+    private String sportName;
 }

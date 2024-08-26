@@ -1,16 +1,15 @@
 package com.rtarcisio.usersandnotify.controller;
 
-
+import com.rtarcisio.usersandnotify.domain.Country;
 import com.rtarcisio.usersandnotify.domain.Usuario;
-import com.rtarcisio.usersandnotify.dtos.FollowedCountryDto;
 import com.rtarcisio.usersandnotify.dtos.UsuarioCountriesDto;
 import com.rtarcisio.usersandnotify.security.TokenService;
 import com.rtarcisio.usersandnotify.service.UsuarioService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class UsuarioController {
 
 
     @GetMapping("/status")
-    public String statusApi(){
+    public String statusApi() {
         return "OK";
     }
 
@@ -41,11 +40,18 @@ public class UsuarioController {
 
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping("/follow-country")
-    private ResponseEntity<UsuarioCountriesDto> followedCountry(@RequestBody List<Long> toFollow  /*@RequestBody FollowedCountryDto dto*/){
-        FollowedCountryDto dto = new FollowedCountryDto();
+    private ResponseEntity<UsuarioCountriesDto> followedCountry(@RequestBody List<Country> toFollow  /*@RequestBody FollowedCountryDto dto*/) {
+
         return ResponseEntity.ok(usuarioService.followcountry(toFollow));
     }
 
+    @GetMapping(value = "/code")
+    public ResponseEntity<List<Usuario>> seguemCountry(@RequestParam String countryCode) {
 
+
+        return ResponseEntity.ok(service.queSeguemPais(countryCode));
+
+    }
 }

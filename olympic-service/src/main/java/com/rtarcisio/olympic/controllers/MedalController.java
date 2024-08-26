@@ -1,6 +1,7 @@
 package com.rtarcisio.olympic.controllers;
 
 import com.rtarcisio.olympic.dtos.MedalDto;
+import com.rtarcisio.olympic.rabbit.events.MedalCreatedEvent;
 import com.rtarcisio.olympic.services.MedalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Message;
@@ -27,9 +28,9 @@ public class MedalController {
     public ResponseEntity<MedalDto> createMedal(@RequestBody MedalDto medalDto) {
         medalDto = medalService.saveMedal(medalDto);
         String routingKey = "olympic.medals-created";
+        MedalCreatedEvent event = new MedalCreatedEvent(medalDto.getCountryName(), medalDto.getCountryCode(), medalDto.getType(), medalDto.getSportName());
 
-        Message message = new Message(medalDto.getId().toString().getBytes());
-        rabbitTemplate.convertAndSend(routingKey, message);
+        rabbitTemplate.convertAndSend(routingKey, event);
         return ResponseEntity.ok(medalDto);
     }
 

@@ -29,9 +29,13 @@ public class CountryService {
     private final MedalBronzeRepository medalBronzeRepository;
 
 
-    public Page<Country> getAllCountrys(Pageable pageable) {
+    public List<CountryDto> getAllCountrys() {
 
-        return countryRepository.findAll(pageable);
+        List<Country> countries = countryRepository.findAllByOrderByNameAsc();
+        List<CountryDto> dtos = countries.stream()
+                .map(country -> countryDto(country))
+                .collect(Collectors.toList());
+        return dtos;
     }
 
     public Country getCountryById(Long id) {
@@ -45,13 +49,13 @@ public class CountryService {
 
     public List<CountryMedalDto> getAllCountrysMedals() {
 
-        List<Country>countries = countryRepository.findAll();
+        List<Country>countries = countryRepository.findAllByOrderByNameAsc();
         List<CountryMedalDto> list = countries.stream()
-                .map(this::getCountryMedalDto)  // Usa o método getCountryMedalDto para conversão
+                .map(this::getCountryMedalDto)
                 .sorted(Comparator.comparing((CountryMedalDto countryMedalDto) -> countryMedalDto.getQtdGold()).reversed()
                         .thenComparing(countryMedalDto1 -> countryMedalDto1.getQtdSilver()).reversed()
                         .thenComparing(countryMedalDto2 -> countryMedalDto2.getQtdBronze()).reversed())
-                .collect(Collectors.toList());  // Coleta em uma lista
+                .collect(Collectors.toList());
 
         return list;
     }
@@ -62,6 +66,7 @@ public class CountryService {
         CountryMedalDto countryMedalDto = new CountryMedalDto();
         int totalMedals = 0;
 
+        countryMedalDto.setId(country.getId());
         countryMedalDto.setQtdGold(country.getMedalsGold().size());
         countryMedalDto.setQtdSilver(country.getMedalsSilver().size());
         countryMedalDto.setQtdBronze(country.getMedalBronze().size());
@@ -70,12 +75,11 @@ public class CountryService {
         totalMedals = countryMedalDto.getQtdGold() + countryMedalDto.getQtdSilver() + countryMedalDto.getQtdBronze();
         countryMedalDto.setTotalMedals(totalMedals);
 
-
         return countryMedalDto;
     }
 
     private CountryDto countryDto(Country country){
-        return new CountryDto(country.getCode(), country.getName());
+        return new CountryDto(country.getId(), country.getName(),country.getCode());
     }
 
 }

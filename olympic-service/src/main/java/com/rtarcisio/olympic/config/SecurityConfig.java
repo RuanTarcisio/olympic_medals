@@ -26,6 +26,11 @@ public class SecurityConfig {
 
     final SecurityFilter securityFilter;
 
+    String[] protectedPostEndpoints = {
+            "/medal/create",
+    };
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -33,7 +38,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, protectedPostEndpoints).hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new CustomAuthenticationExceptionFilter())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

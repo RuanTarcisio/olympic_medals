@@ -25,17 +25,20 @@ public class MedalService {
 
     public MedalDto saveMedal(MedalDto medalDto) {
 
-
         return (medalDto = saveMedalType(medalDto));
 
     }
 
     private MedalDto saveMedalType(MedalDto medalDto) {
 
-        Country country = countryService.getCountryByCode(medalDto.getCountry_code());
+        Country country = countryService.getCountryByCode(medalDto.getCountryCode());
         Sport sport = sportService.getSportById(medalDto.getSportId());
 
         validateMedal(sport, country, medalDto.getSportId(), medalDto.getType());
+
+        medalDto.setCountryName(country.getName());
+        medalDto.setAwardDate(LocalDate.now());
+        medalDto.setSportName(sport.getNameSport());
 
         switch (medalDto.getType().toUpperCase()) {
             case "GOLD":
@@ -45,7 +48,7 @@ public class MedalService {
                 medalGold.setSport(sport);
                 medalGold.setAwardDate(LocalDate.now());
                 medalGold = medalGoldRepository.save(medalGold);
-                medalDto.setAwardDate(medalGold.getAwardDate());
+
                 medalDto.setId(medalGold.getId());
                 break;
 
@@ -56,7 +59,6 @@ public class MedalService {
                 medalSilver.setAwardDate(LocalDate.now());
                 medalSilver = medalSilverRepository.save(medalSilver);
 
-                medalDto.setAwardDate(medalSilver.getAwardDate());
                 medalDto.setId(medalSilver.getId());
                 break;
 
@@ -66,7 +68,7 @@ public class MedalService {
                 medalBronze.setSport(sport);
                 medalBronze.setAwardDate(LocalDate.now());
                 medalBronze = medalBronzeRepository.save(medalBronze);
-                medalDto.setAwardDate(medalBronze.getAwardDate());
+
                 medalDto.setId(medalBronze.getId());
                 break;
 
@@ -77,8 +79,6 @@ public class MedalService {
     }
 
     private Boolean validateMedal(Sport sport, Country country, Long idSport, String type){
-
-
 
         if(type.equalsIgnoreCase("GOLD")) {
             List<MedalGold> medalsG = medalGoldRepository.findAllByCountry(country);
@@ -104,6 +104,9 @@ public class MedalService {
 
                 }
             }
+        }
+        else{
+            throw new RuntimeException("Tipo de medalha invalid : " + type);
         }
         return true;
 

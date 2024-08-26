@@ -1,4 +1,4 @@
-package com.rtarcisio.olympic.rabbit;
+package com.rtarcisio.usersandnotify.rabbit;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -12,20 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-
-    @Bean
-    public Queue queue(){
-        return new Queue("olympic.medals-created");
-    }
-
-    @Bean
-    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory){
-        return new RabbitAdmin(connectionFactory);
-    }
-
-    @Bean public ApplicationListener<ApplicationReadyEvent> applicationListener(RabbitAdmin rabbitAdmin){
-        return event -> rabbitAdmin.initialize();
-    }
 
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter(){
