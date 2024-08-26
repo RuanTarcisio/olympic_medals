@@ -2,6 +2,7 @@ package com.rtarcisio.olympic.controllers;
 
 import com.rtarcisio.olympic.domain.Country;
 import com.rtarcisio.olympic.domain.Sport;
+import com.rtarcisio.olympic.dtos.CountryDto;
 import com.rtarcisio.olympic.dtos.CountryMedalDto;
 import com.rtarcisio.olympic.services.CountryService;
 import lombok.RequiredArgsConstructor;
@@ -30,18 +31,17 @@ public class CountryController {
         return ResponseEntity.ok(sportsPage);
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Country> getCountry(@PathVariable Long id) {
-        return ResponseEntity.ok(countryService.getCountryById(id));
-    }
-
-    @GetMapping(value = "/name")
-    public ResponseEntity<Country> getSportByName(@RequestParam String sportName) {
-        return ResponseEntity.ok(countryService.getCountryByName(sportName));
+    public ResponseEntity<CountryMedalDto> getCountry(@PathVariable Long id) {
+        Country country = countryService.getCountryById(id);
+        CountryMedalDto countryMedalDto = countryService.getCountryMedalDto(country);
+        return ResponseEntity.ok(countryMedalDto);
     }
 
     @GetMapping(value = "/code")
-    public ResponseEntity<Country> getSportByCode(@RequestParam String sportCode) {
-        return ResponseEntity.ok(countryService.getCountryByCode(sportCode));
+    public ResponseEntity<CountryMedalDto> getCountryByCode(@RequestParam String countryCode) {
+        Country country = countryService.getCountryByCode(countryCode);
+        CountryMedalDto countryMedalDto = countryService.getCountryMedalDto(country);
+        return ResponseEntity.ok(countryMedalDto);
     }
 
     @GetMapping(value = "/all-country-medals")
@@ -52,16 +52,5 @@ public class CountryController {
         return ResponseEntity.ok(countrysMedalsDtos);
 
     }
-
-//    @GetMapping(value = "/selected-countrys")
-//    public ResponseEntity<List<CountryMedalDto>> getAllCountryMedals() {
-//
-//        List<CountryMedalDto> countrysMedalsDtos = countryService.getAllCountrysMedals();
-//
-//        return ResponseEntity.ok(countrysMedalsDtos);
-//
-//    }
-
-
 
 }

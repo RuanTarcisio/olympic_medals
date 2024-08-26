@@ -39,10 +39,6 @@ public class CountryService {
         return countryRepository.findById(id).orElseThrow(() ->new RuntimeException("País não cadastrado."));
     }
 
-    public Country getCountryByName(String name) {
-        return countryRepository.findByName(name).orElseThrow(() ->new RuntimeException("País não cadastrado."));
-    }
-
     public Country getCountryByCode(String code) {
         return countryRepository.findByCode(code).orElseThrow(() ->new RuntimeException("País não cadastrado."));
     }
@@ -61,7 +57,7 @@ public class CountryService {
     }
 
 
-    private CountryMedalDto getCountryMedalDto(Country country) {
+    public CountryMedalDto getCountryMedalDto(Country country) {
 
         CountryMedalDto countryMedalDto = new CountryMedalDto();
         int totalMedals = 0;

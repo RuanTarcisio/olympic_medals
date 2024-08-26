@@ -1,11 +1,13 @@
 package com.rtarcisio.olympic.services;
 
-import com.rtarcisio.olympic.repositories.CountryRepository;
-import com.rtarcisio.olympic.repositories.MedalBronzeRepository;
-import com.rtarcisio.olympic.repositories.MedalGoldRepository;
-    import com.rtarcisio.olympic.repositories.MedalSilverRepository;
+import com.rtarcisio.olympic.domain.*;
+import com.rtarcisio.olympic.dtos.MedalDto;
+import com.rtarcisio.olympic.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +20,94 @@ public class MedalService {
     private final CountryService countryService;
 
     private final SportService sportService;
-    private final CountryRepository countryRepository;
+
+    private final SportRepository sportRepository;
+
+    public MedalDto saveMedal(MedalDto medalDto) {
+
+
+        return (medalDto = saveMedalType(medalDto));
+
+    }
+
+    private MedalDto saveMedalType(MedalDto medalDto) {
+
+        Country country = countryService.getCountryByCode(medalDto.getCountry_code());
+        Sport sport = sportService.getSportById(medalDto.getSportId());
+
+        validateMedal(sport, country, medalDto.getSportId(), medalDto.getType());
+
+        switch (medalDto.getType().toUpperCase()) {
+            case "GOLD":
+
+                MedalGold medalGold = new MedalGold();
+                medalGold.setCountry(country);
+                medalGold.setSport(sport);
+                medalGold.setAwardDate(LocalDate.now());
+                medalGold = medalGoldRepository.save(medalGold);
+                medalDto.setAwardDate(medalGold.getAwardDate());
+                medalDto.setId(medalGold.getId());
+                break;
+
+            case "SILVER":
+                MedalSilver medalSilver = new MedalSilver();
+                medalSilver.setCountry(country);
+                medalSilver.setSport(sport);
+                medalSilver.setAwardDate(LocalDate.now());
+                medalSilver = medalSilverRepository.save(medalSilver);
+
+                medalDto.setAwardDate(medalSilver.getAwardDate());
+                medalDto.setId(medalSilver.getId());
+                break;
+
+            case "BRONZE":
+                MedalBronze medalBronze = new MedalBronze();
+                medalBronze.setCountry(country);
+                medalBronze.setSport(sport);
+                medalBronze.setAwardDate(LocalDate.now());
+                medalBronze = medalBronzeRepository.save(medalBronze);
+                medalDto.setAwardDate(medalBronze.getAwardDate());
+                medalDto.setId(medalBronze.getId());
+                break;
+
+            default:
+                throw new RuntimeException("Type not supported: " + medalDto.getType());
+        }
+        return medalDto;
+    }
+
+    private Boolean validateMedal(Sport sport, Country country, Long idSport, String type){
 
 
 
+        if(type.equalsIgnoreCase("GOLD")) {
+            List<MedalGold> medalsG = medalGoldRepository.findAllByCountry(country);
+            for (MedalGold medalGold : medalsG) {
+                if (medalGold.getSport().getId().equals(idSport)) {
+                    throw new RuntimeException("Duplicate medal sport id: " + idSport);
+                }
+            }
+        }
+        else if(type.equalsIgnoreCase("SILVER")) {
+            List<MedalSilver> medalSilver = medalSilverRepository.findAllByCountry(country);
+            for (MedalSilver medalS : medalSilver) {
+                if (medalS.getSport().getId().equals(idSport)) {
+                    throw new RuntimeException("Duplicate medal sport id: " + idSport);
+                }
+            }
+        }
+        else if(type.equalsIgnoreCase("BRONZE")) {
+            List<MedalBronze> medalBronze = medalBronzeRepository.findAllByCountry(country);
+            for (MedalBronze medalB : medalBronze) {
+                if (medalB.getSport().getId().equals(idSport)) {
+                    throw new RuntimeException("Duplicate medal sport id: " + idSport);
 
+                }
+            }
+        }
+        return true;
 
+    }
 
 //    public Page<Medal> getAllMedals(Pageable pageable) {
 //
