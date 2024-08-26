@@ -33,6 +33,7 @@ public class TokenService {
     public CustomUserDetails getUserDetails(String token) {
         DecodedJWT decodedJWT = decodeTokenAndValid(token);
         List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+        String email = decodedJWT.getSubject();
         String username = decodedJWT.getClaim("nome").asString();
         return new CustomUserDetails(username, roles);
     }
@@ -46,6 +47,8 @@ public class TokenService {
         DecodedJWT decodedJWT = decodeTokenAndValid(token);
         return decodedJWT.getClaim("roles").asList(String.class);
     }
+
+
 
     public Date getExpirationDate(String token) {
         DecodedJWT decodedJWT = decodeTokenAndValid(token);

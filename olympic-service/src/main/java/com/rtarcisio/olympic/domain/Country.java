@@ -2,6 +2,7 @@ package com.rtarcisio.olympic.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rtarcisio.olympic.domain.enums.MedalType;
+import com.rtarcisio.olympic.dtos.UsuarioDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,15 +23,15 @@ public class Country {
     private String name;
 
     private String code;
-    @JsonIgnore
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "country")
     private List<MedalGold> medalsGold;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "country")
     private List<MedalSilver> medalsSilver;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "country")
     private List<MedalBronze> medalBronze;
+
+
 }

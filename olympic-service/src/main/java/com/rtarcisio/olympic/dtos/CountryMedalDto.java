@@ -7,9 +7,13 @@ public class CountryMedalDto {
 
     private String countryName;
 
+    private String countryCode;
+
     private Integer qtdGold;
 
     private Integer qtdSilver;
 
     private Integer qtdBronze;
+
+    private Integer totalMedals;
 }

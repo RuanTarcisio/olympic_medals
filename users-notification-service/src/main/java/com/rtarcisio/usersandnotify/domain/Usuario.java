@@ -2,6 +2,7 @@ package com.rtarcisio.usersandnotify.domain;
 
 import com.rtarcisio.usersandnotify.domain.enums.StatusUsuarioEnum;
 import com.rtarcisio.usersandnotify.domain.enums.UserRole;
+import com.rtarcisio.usersandnotify.dtos.CountryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,7 +42,10 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    //private List<Paises> paisesSeguidos;
+    @ElementCollection
+    @CollectionTable(name = "usuario_country", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Column(name = "country_id")
+    private List<Long> followedCountryIds = new ArrayList<>();
 
 
     public Usuario(String nome, String email, String password, String cpf, LocalDate dataNascimento) {

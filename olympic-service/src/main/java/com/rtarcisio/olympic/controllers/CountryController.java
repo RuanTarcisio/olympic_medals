@@ -53,6 +53,15 @@ public class CountryController {
 
     }
 
+//    @GetMapping(value = "/selected-countrys")
+//    public ResponseEntity<List<CountryMedalDto>> getAllCountryMedals() {
+//
+//        List<CountryMedalDto> countrysMedalsDtos = countryService.getAllCountrysMedals();
+//
+//        return ResponseEntity.ok(countrysMedalsDtos);
+//
+//    }
+
 
 
 }

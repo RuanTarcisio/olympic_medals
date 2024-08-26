@@ -3,6 +3,7 @@ package com.rtarcisio.olympic.services;
 import com.rtarcisio.olympic.domain.Country;
 import com.rtarcisio.olympic.domain.MedalBronze;
 import com.rtarcisio.olympic.domain.Sport;
+import com.rtarcisio.olympic.dtos.CountryDto;
 import com.rtarcisio.olympic.dtos.CountryMedalDto;
 import com.rtarcisio.olympic.repositories.CountryRepository;
 import com.rtarcisio.olympic.repositories.MedalBronzeRepository;
@@ -63,13 +64,22 @@ public class CountryService {
     private CountryMedalDto getCountryMedalDto(Country country) {
 
         CountryMedalDto countryMedalDto = new CountryMedalDto();
+        int totalMedals = 0;
 
         countryMedalDto.setQtdGold(country.getMedalsGold().size());
         countryMedalDto.setQtdSilver(country.getMedalsSilver().size());
         countryMedalDto.setQtdBronze(country.getMedalBronze().size());
         countryMedalDto.setCountryName(country.getName());
+        countryMedalDto.setCountryCode(country.getCode());
+        totalMedals = countryMedalDto.getQtdGold() + countryMedalDto.getQtdSilver() + countryMedalDto.getQtdBronze();
+        countryMedalDto.setTotalMedals(totalMedals);
+
 
         return countryMedalDto;
+    }
+
+    private CountryDto countryDto(Country country){
+        return new CountryDto(country.getCode(), country.getName());
     }
 
 }

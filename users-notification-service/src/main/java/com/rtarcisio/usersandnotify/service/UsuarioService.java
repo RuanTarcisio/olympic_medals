@@ -2,15 +2,19 @@ package com.rtarcisio.usersandnotify.service;
 
 import com.rtarcisio.usersandnotify.domain.Usuario;
 import com.rtarcisio.usersandnotify.domain.enums.StatusUsuarioEnum;
+import com.rtarcisio.usersandnotify.dtos.FollowedCountryDto;
 import com.rtarcisio.usersandnotify.dtos.RegisterDTO;
+import com.rtarcisio.usersandnotify.dtos.UsuarioCountriesDto;
 import com.rtarcisio.usersandnotify.repository.UsuarioRepository;
 import com.rtarcisio.usersandnotify.service.exceptions.ObjetoNaoRemovidoException;
 import com.rtarcisio.usersandnotify.service.exceptions.UsuarioNaoEncontradoException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,5 +61,22 @@ public class UsuarioService {
     public Usuario buscarPorEmail(String email) {
         Optional<Usuario> obj = usuarioRepository.findByEmail(email);
         return obj.orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario não encontrado"));
+    }
+
+    public UsuarioCountriesDto followcountry(List<Long> toFollow ) {
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(usuario != null) {
+            usuario.setFollowedCountryIds(toFollow);
+
+            usuarioRepository.save(usuario);
+        }
+        UsuarioCountriesDto userDto = new UsuarioCountriesDto();
+        userDto.setId(usuario.getId());
+        userDto.setFollowedCountryIds(toFollow);
+        userDto.setNome(usuario.getNome());
+        userDto.setEmail(usuario.getEmail());
+
+        return userDto;
+
     }
 }
