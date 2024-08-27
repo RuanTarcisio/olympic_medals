@@ -26,8 +26,7 @@ public class SecurityConfig {
     String[] protectedPostEndpoints = {
             "/medal/create",
     };
-
-
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity

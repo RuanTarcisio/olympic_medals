@@ -46,6 +46,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, publicPostEndpoints).permitAll()
                         .requestMatchers(HttpMethod.GET, protectedGetEndPoints).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/usuario/follow-country").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/usuario/delete/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
