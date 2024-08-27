@@ -1,13 +1,11 @@
 package com.rtarcisio.olympic.controllers;
 
 import com.rtarcisio.olympic.domain.Country;
-import com.rtarcisio.olympic.domain.Sport;
 import com.rtarcisio.olympic.dtos.CountryDto;
 import com.rtarcisio.olympic.dtos.CountryMedalDto;
+import com.rtarcisio.olympic.dtos.CountryMedalInfoDto;
 import com.rtarcisio.olympic.services.CountryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,27 +28,35 @@ public class CountryController {
         List<CountryDto> allCountrys = countryService.getAllCountrys();
         return ResponseEntity.ok(allCountrys);
     }
+
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CountryMedalDto> getCountry(@PathVariable Long id) {
+    public ResponseEntity<CountryMedalInfoDto> getCountry(@PathVariable Long id) {
         Country country = countryService.getCountryById(id);
-        CountryMedalDto countryMedalDto = countryService.getCountryMedalDto(country);
-        return ResponseEntity.ok(countryMedalDto);
+        CountryMedalInfoDto countryMedalInfoDto = countryService.getCountryMedalDto(country);
+        return ResponseEntity.ok(countryMedalInfoDto);
     }
 
     @GetMapping(value = "/code")
-    public ResponseEntity<CountryMedalDto> getCountryByCode(@RequestParam String countryCode) {
+    public ResponseEntity<CountryMedalInfoDto> getCountryByCode(@RequestParam String countryCode) {
         Country country = countryService.getCountryByCode(countryCode);
-        CountryMedalDto countryMedalDto = countryService.getCountryMedalDto(country);
-        return ResponseEntity.ok(countryMedalDto);
+        CountryMedalInfoDto countryMedalInfoDto = countryService.getCountryMedalDto(country);
+        return ResponseEntity.ok(countryMedalInfoDto);
     }
 
     @GetMapping(value = "/all-medals")
-    public ResponseEntity<List<CountryMedalDto>> getAllCountryMedals() {
+    public ResponseEntity<List<CountryMedalInfoDto>> getAllCountryMedals() {
 
-        List<CountryMedalDto> countrysMedalsDtos = countryService.getAllCountrysMedals();
+        List<CountryMedalInfoDto> countrysMedalsDtos = countryService.getAllCountrysMedals();
 
         return ResponseEntity.ok(countrysMedalsDtos);
 
+    }
+
+    @GetMapping(value = "/medals/{id}")
+    public ResponseEntity<CountryMedalDto> getCountryAllMedals(@PathVariable Long id) {
+
+        CountryMedalDto countryMedalInfoDto = countryService.medalsCountry(id);
+        return ResponseEntity.ok(countryMedalInfoDto);
     }
 
 }

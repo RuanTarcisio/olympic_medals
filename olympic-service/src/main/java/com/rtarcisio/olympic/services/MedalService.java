@@ -2,12 +2,14 @@ package com.rtarcisio.olympic.services;
 
 import com.rtarcisio.olympic.domain.*;
 import com.rtarcisio.olympic.dtos.MedalDto;
+import com.rtarcisio.olympic.dtos.MedalSportDto;
 import com.rtarcisio.olympic.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +19,10 @@ public class MedalService {
     private final MedalBronzeRepository medalBronzeRepository;
     private final MedalSilverRepository medalSilverRepository;
 
-    private final CountryService countryService;
 
     private final SportService sportService;
 
+    private final CountryRepository countryRepository;
     private final SportRepository sportRepository;
 
     public MedalDto saveMedal(MedalDto medalDto) {
@@ -31,7 +33,7 @@ public class MedalService {
 
     private MedalDto saveMedalType(MedalDto medalDto) {
 
-        Country country = countryService.getCountryByCode(medalDto.getCountryCode());
+        Country country = countryRepository.findByCode(medalDto.getCountryCode()).orElseThrow(() ->new RuntimeException("País não cadastrado."));
         Sport sport = sportService.getSportById(medalDto.getSportId());
 
         validateMedal(sport, country, medalDto.getSportId(), medalDto.getType());
@@ -76,6 +78,30 @@ public class MedalService {
                 throw new RuntimeException("Type not supported: " + medalDto.getType());
         }
         return medalDto;
+    }
+
+    public List<MedalSportDto> medalsGold(List<MedalGold> medalsDto){
+        List<MedalSportDto> medalReturn = medalsDto.stream().map(medal -> convert("GOLD", medal.getSport().getNameSport(), medal.getAwardDate()))
+                .collect(Collectors.toList());
+        return medalReturn;
+    }
+
+    public List<MedalSportDto> medalsSilver(List<MedalSilver> medalsDto){
+        List<MedalSportDto> medalReturn = medalsDto.stream().map(medal -> convert("GOLD", medal.getSport().getNameSport(), medal.getAwardDate()))
+                .collect(Collectors.toList());
+        return medalReturn;
+    }
+
+    public List<MedalSportDto> medalsBronze(List<MedalBronze> medalsDto){
+        List<MedalSportDto> medalReturn = medalsDto.stream().map(medal -> convert("GOLD", medal.getSport().getNameSport(), medal.getAwardDate()))
+                .collect(Collectors.toList());
+        return medalReturn;
+    }
+
+    private MedalSportDto convert (String type, String sport, LocalDate awardDate){
+        MedalSportDto medal = new MedalSportDto(type, sport, awardDate);
+
+        return medal;
     }
 
     private Boolean validateMedal(Sport sport, Country country, Long idSport, String type){

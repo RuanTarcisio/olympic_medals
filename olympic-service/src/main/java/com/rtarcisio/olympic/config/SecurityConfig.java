@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuração de CORS
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sem estado
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, protectedPostEndpoints).hasRole("ADMIN") // Protege endpoints específicos
-                        .anyRequest().permitAll() // Permite todas as outras requisições
+//                        .requestMatchers(HttpMethod.POST, protectedPostEndpoints)
+                        .anyRequest().permitAll()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(new CustomAuthenticationExceptionFilter()) // Manipulador de entrada não autenticado

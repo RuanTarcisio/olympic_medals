@@ -1,4 +1,4 @@
-package com.rtarcisio.usersandnotify.config;
+package com.rtarcisio.usersandnotify.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
