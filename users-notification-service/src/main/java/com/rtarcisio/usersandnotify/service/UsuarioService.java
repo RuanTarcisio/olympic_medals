@@ -8,6 +8,7 @@ import com.rtarcisio.usersandnotify.dtos.RegisterDTO;
 import com.rtarcisio.usersandnotify.dtos.UsuarioCountriesDto;
 import com.rtarcisio.usersandnotify.dtos.UsuarioDto;
 import com.rtarcisio.usersandnotify.repository.UsuarioRepository;
+import com.rtarcisio.usersandnotify.service.exceptions.ObjetoJaCadastradoException;
 import com.rtarcisio.usersandnotify.service.exceptions.ObjetoNaoRemovidoException;
 import com.rtarcisio.usersandnotify.service.exceptions.UsuarioNaoEncontradoException;
 import jakarta.validation.Valid;
@@ -29,6 +30,13 @@ public class UsuarioService {
 
 
     public Usuario salvarUser(@Valid RegisterDTO data) {
+
+        if(usuarioRepository.findByCpf(data.cpf()).isPresent()) {
+            throw new ObjetoJaCadastradoException("Cpf cadastrado.");
+        }
+        if(usuarioRepository.findByEmail(data.email()).isPresent()) {
+            throw new ObjetoJaCadastradoException("Email cadastrado.");
+        }
 
 //        if(this.usuarioRepository.findByEmail(data.email()) != null)
 //            throw new RuntimeException("Usuario já cadastado.");

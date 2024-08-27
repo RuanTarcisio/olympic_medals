@@ -1,7 +1,8 @@
 package com.rtarcisio.olympic.dtos;
 
-import jakarta.validation.constraints.NotBlank;
+
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,20 +17,21 @@ public class MedalDto {
 
     private Long id;
 
-    @NotBlank
+
+    @NotNull
     private String type;
 
     private LocalDate awardDate;
 
-    @NotBlank
+    @NotNull
     private String countryCode;
 
-    @NotBlank
+    @NotNull
     private String countryName;
 
-    @NotBlank
+    @NotNull
     private Long sportId;
 
-    @NotBlank
+    @NotNull
     private String sportName;
 }

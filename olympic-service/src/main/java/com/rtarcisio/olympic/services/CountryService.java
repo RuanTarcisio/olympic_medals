@@ -8,6 +8,7 @@ import com.rtarcisio.olympic.repositories.CountryRepository;
 import com.rtarcisio.olympic.repositories.MedalBronzeRepository;
 import com.rtarcisio.olympic.repositories.MedalGoldRepository;
 import com.rtarcisio.olympic.repositories.MedalSilverRepository;
+import com.rtarcisio.olympic.services.exceptions.ObjetoNaoEncontradoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,11 +39,11 @@ public class CountryService {
 
     public Country getCountryById(Long id) {
 
-        return countryRepository.findById(id).orElseThrow(() ->new RuntimeException("País não cadastrado."));
+        return countryRepository.findById(id).orElseThrow(() ->new ObjetoNaoEncontradoException("País não cadastrado."));
     }
 
     public Country getCountryByCode(String code) {
-        return countryRepository.findByCode(code).orElseThrow(() ->new RuntimeException("País não cadastrado."));
+        return countryRepository.findByCode(code).orElseThrow(() ->new ObjetoNaoEncontradoException("País não cadastrado."));
     }
 
     public List<CountryMedalInfoDto> getAllCountrysMedals() {

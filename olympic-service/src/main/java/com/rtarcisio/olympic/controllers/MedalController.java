@@ -3,6 +3,7 @@ package com.rtarcisio.olympic.controllers;
 import com.rtarcisio.olympic.dtos.MedalDto;
 import com.rtarcisio.olympic.rabbit.events.MedalCreatedEvent;
 import com.rtarcisio.olympic.services.MedalService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

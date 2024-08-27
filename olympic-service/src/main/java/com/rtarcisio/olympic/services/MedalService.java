@@ -4,6 +4,9 @@ import com.rtarcisio.olympic.domain.*;
 import com.rtarcisio.olympic.dtos.MedalDto;
 import com.rtarcisio.olympic.dtos.MedalSportDto;
 import com.rtarcisio.olympic.repositories.*;
+import com.rtarcisio.olympic.services.exceptions.ObjetoInvalidoException;
+import com.rtarcisio.olympic.services.exceptions.ObjetoJaCadastradoException;
+import com.rtarcisio.olympic.services.exceptions.UsuarioNaoEncontradoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,7 @@ public class MedalService {
 
     private MedalDto saveMedalType(MedalDto medalDto) {
 
-        Country country = countryRepository.findByCode(medalDto.getCountryCode()).orElseThrow(() ->new RuntimeException("País não cadastrado."));
+        Country country = countryRepository.findByCode(medalDto.getCountryCode()).orElseThrow(() ->new UsuarioNaoEncontradoException("País não cadastrado."));
         Sport sport = sportService.getSportById(medalDto.getSportId());
 
         validateMedal(sport, country, medalDto.getSportId(), medalDto.getType());
@@ -75,7 +78,7 @@ public class MedalService {
                 break;
 
             default:
-                throw new RuntimeException("Type not supported: " + medalDto.getType());
+                throw new ObjetoInvalidoException("Type not supported: " + medalDto.getType());
         }
         return medalDto;
     }
@@ -110,7 +113,7 @@ public class MedalService {
             List<MedalGold> medalsG = medalGoldRepository.findAllByCountry(country);
             for (MedalGold medalGold : medalsG) {
                 if (medalGold.getSport().getId().equals(idSport)) {
-                    throw new RuntimeException("Duplicate medal sport id: " + idSport);
+                    throw new ObjetoJaCadastradoException("Duplicate medal sport id: " + idSport);
                 }
             }
         }
@@ -118,7 +121,7 @@ public class MedalService {
             List<MedalSilver> medalSilver = medalSilverRepository.findAllByCountry(country);
             for (MedalSilver medalS : medalSilver) {
                 if (medalS.getSport().getId().equals(idSport)) {
-                    throw new RuntimeException("Duplicate medal sport id: " + idSport);
+                    throw new ObjetoJaCadastradoException("Duplicate medal sport id: " + idSport);
                 }
             }
         }
@@ -126,13 +129,13 @@ public class MedalService {
             List<MedalBronze> medalBronze = medalBronzeRepository.findAllByCountry(country);
             for (MedalBronze medalB : medalBronze) {
                 if (medalB.getSport().getId().equals(idSport)) {
-                    throw new RuntimeException("Duplicate medal sport id: " + idSport);
+                    throw new ObjetoJaCadastradoException("Duplicate medal sport id: " + idSport);
 
                 }
             }
         }
         else{
-            throw new RuntimeException("Tipo de medalha invalid : " + type);
+            throw new ObjetoInvalidoException("Tipo de medalha invalid : " + type);
         }
         return true;
 
