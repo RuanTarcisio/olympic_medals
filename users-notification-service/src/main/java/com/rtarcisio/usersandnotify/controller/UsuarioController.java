@@ -3,6 +3,7 @@ package com.rtarcisio.usersandnotify.controller;
 import com.rtarcisio.usersandnotify.domain.Country;
 import com.rtarcisio.usersandnotify.domain.Usuario;
 import com.rtarcisio.usersandnotify.dtos.UsuarioCountriesDto;
+import com.rtarcisio.usersandnotify.dtos.UsuarioDto;
 import com.rtarcisio.usersandnotify.security.TokenService;
 import com.rtarcisio.usersandnotify.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
@@ -48,7 +49,7 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/code")
-    public ResponseEntity<List<Usuario>> seguemCountry(@RequestParam String countryCode) {
+    public ResponseEntity<List<UsuarioDto>> seguemCountry(@RequestParam String countryCode) {
 
 
         return ResponseEntity.ok(service.queSeguemPais(countryCode));

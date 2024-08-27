@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -82,9 +83,11 @@ public class UsuarioService {
 
     }
 
-    public List<Usuario> queSeguemPais(String countryCode){
+    public List<UsuarioDto> queSeguemPais(String countryCode){
         List<Usuario> usuarios = usuarioRepository.findAllByFollowedCountries_Code(countryCode);
-        return usuarios;
+        List<UsuarioDto> users = usuarios.stream().map(usuario -> convert(usuario))
+                .collect(Collectors.toList());
+        return users;
     }
 
     private UsuarioCountriesDto addFollowedCountries(List<Country> toFollow) {
