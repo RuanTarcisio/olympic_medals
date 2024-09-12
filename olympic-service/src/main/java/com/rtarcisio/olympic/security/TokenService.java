@@ -32,7 +32,7 @@ public class TokenService {
 
     public CustomUserDetails getUserDetails(String token) {
         DecodedJWT decodedJWT = decodeTokenAndValid(token);
-        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+        List<String> roles = getRoles(token);
         String email = decodedJWT.getSubject();
         String username = decodedJWT.getClaim("nome").asString();
         return new CustomUserDetails(username, roles);

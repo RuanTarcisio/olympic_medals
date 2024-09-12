@@ -30,5 +30,9 @@ public class Country {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "country")
     private List<MedalBronze> medalBronze;
 
+    @OneToOne
+    @JoinColumn(name = "delegacao_id")
+    private Delegacao delegacao;
+
 
 }

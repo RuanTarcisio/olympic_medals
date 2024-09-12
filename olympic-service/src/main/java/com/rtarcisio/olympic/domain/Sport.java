@@ -24,6 +24,14 @@ public class Sport {
 
     private Integer qtdParticipants;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "atletas_sports",
+            joinColumns = @JoinColumn(name = "atleta_id"),
+            inverseJoinColumns = @JoinColumn(name = "sport_id")
+    )
+    private List<Atleta> atletas;
+
     @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "sport")
     private MedalGold medalGold;

@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configuração de CORS
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sem estado
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers(HttpMethod.POST, protectedPostEndpoints)
+                        .requestMatchers(HttpMethod.POST, protectedPostEndpoints).hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
