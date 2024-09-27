@@ -23,6 +23,10 @@ public class MedalGold {
     @JoinColumn(name = "country_id")
     private Country country;
 
+    @ManyToOne
+    @JoinColumn(name = "atlet_id")
+    private Atleta atlet;
+
     @OneToOne
     @JoinColumn(name = "sport_id")
     private Sport sport;
